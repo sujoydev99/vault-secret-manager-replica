@@ -1,0 +1,16 @@
+{
+  "name": "node-secret-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "shamirs-secret-sharing": "^2.0.0",
+    "sqlite3": "^5.1.7"
+  }
+}
