@@ -38,13 +38,13 @@ If `SECRETS_DB_PATH` is not specified, it defaults to tmp.
 2. **Initialize the vault**:
 
    ```sh
-   curl -X POST http://localhost:3000/init
+   curl -X POST http://localhost:3000/vault/init
    ```
 
 3. **Split the master key** (generates key shares):
 
    ```sh
-   curl -X POST http://localhost:3000/split-key \
+   curl -X POST http://localhost:3000/vault/split-key \
      -H "Content-Type: application/json" \
      -d '{"shares": 5, "threshold": 3}'
    ```
@@ -54,7 +54,7 @@ If `SECRETS_DB_PATH` is not specified, it defaults to tmp.
 4. **Unseal the vault** (requires at least 3 shares):
 
    ```sh
-   curl -X POST http://localhost:3000/unseal \
+   curl -X POST http://localhost:3000/vault/unseal \
      -H "Content-Type: application/json" \
      -d '{"shares": ["share1", "share2", "share3"]}'
    ```
@@ -62,14 +62,14 @@ If `SECRETS_DB_PATH` is not specified, it defaults to tmp.
 5. **Store a secret**:
 
    ```sh
-   curl -X POST http://localhost:3000/store-secret \
+   curl -X POST http://localhost:3000/secret/store \
      -H "Content-Type: application/json" \
      -d '{"key": "myapp/db/password", "value": "secret123"}'
    ```
 
 6. **Retrieve a secret**:
    ```sh
-   curl http://localhost:3000/get-secret/myapp/db/password
+   curl http://localhost:3000/secret/get/myapp/db/password
    ```
 
 ## Security Features
@@ -84,10 +84,11 @@ The vault starts in a sealed state and requires key shares to unseal before any 
 
 ## API Endpoints
 
-- `POST /init` - Initialize vault
-- `POST /split-key` - Generate key shares
-- `POST /unseal` - Unseal vault
-- `POST /seal` - Seal vault
-- `POST /store-secret` - Store a secret
-- `GET /get-secret/:key` - Retrieve a secret
-- `POST /rotate-key` - Rotate encryption key
+- `POST /vault/init` - Initialize vault
+- `POST /vault/status` - Vault status
+- `POST /vault/split-key` - Generate key shares
+- `POST /vault/unseal` - Unseal vault
+- `POST /vault/seal` - Seal vault
+- `POST /vault/rotate-key` - Rotate encryption key
+- `POST /secret/store-secret` - Store a secret
+- `GET /secret/get/:key` - Retrieve a secret
